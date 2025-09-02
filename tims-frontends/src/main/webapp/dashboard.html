@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>TIMS Dashboard</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+	<!-- Navbar -->
+	<nav class="navbar">
+		<h2>TIMS Dashboard</h2>
+		<ul>
+			<li><a href="#" id="productsTab">Products</a></li>
+			<li><a href="#" id="suppliersTab">Suppliers</a></li>
+			<li><a href="#" id="transactionsTab">Transactions</a></li>
+		</ul>
+	</nav>
+
+	<!-- Main Content -->
+	<div class="content">
+		<!-- Products -->
+		<section id="productsSection" class="section">
+			<h3>📦 Products</h3>
+			<table id="productsTable">
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>Name</th>
+						<th>Category</th>
+						<th>Stock</th>
+						<th>Reorder Point</th>
+					</tr>
+				</thead>
+				<tbody></tbody>
+			</table>
+
+			<h4>Add Product</h4>
+			<form id="productForm">
+				<input type="text" id="prodName" placeholder="Name" required>
+				<input type="text" id="prodCategory" placeholder="Category" required>
+				<input type="number" id="prodStock" placeholder="Stock" step="0.01"
+					required> <input type="number" id="prodReorder"
+					placeholder="Reorder Point" required>
+				<button type="submit">Add</button>
+			</form>
+
+
+		</section>
+
+		<!-- Suppliers -->
+		<section id="suppliersSection" class="section hidden">
+			<h3>🏭 Suppliers</h3>
+			<table id="suppliersTable">
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>Name</th>
+						<th>Contact</th>
+						<th>Email</th>
+					</tr>
+				</thead>
+				<tbody></tbody>
+			</table>
+
+			<h4>Add Supplier</h4>
+			<form id="supplierForm">
+				<input type="text" id="supName" placeholder="Name" required>
+				<input type="text" id="supContact" placeholder="Contact Number">
+				<input type="email" id="supEmail" placeholder="Email">
+				<button type="submit">Add</button>
+			</form>
+		</section>
+
+		<!-- Transactions -->
+		<section id="transactionsSection" class="section hidden">
+			<h3>🔄 Transactions</h3>
+			<table id="transactionsTable">
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>Product</th>
+						<th>Quantity</th>
+						<th>Type</th>
+						<th>Timestamp</th>
+					</tr>
+				</thead>
+				<tbody></tbody>
+			</table>
+
+			<h4>Add Transaction</h4>
+			<form id="transactionForm">
+				<input type="number" id="txnProductId" placeholder="Product ID"
+					required> <input type="number" id="txnQuantity"
+					placeholder="Quantity" required> <select id="txnType">
+					<option value="IN">IN</option>
+					<option value="OUT">OUT</option>
+				</select>
+				<button type="submit">Add</button>
+			</form>
+		</section>
+	</div>
+
+	<script src="js/dashboard.js"></script>
+</body>
+</html>

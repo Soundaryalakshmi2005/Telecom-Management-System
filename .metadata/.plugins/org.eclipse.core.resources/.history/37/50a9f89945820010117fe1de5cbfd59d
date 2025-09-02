@@ -1,0 +1,14 @@
+package edu.jsp.ReadPropertyFile;
+
+import lombok.Data;
+
+@Data
+public class Car {
+ private int cid;
+ private String carname;
+ private String  carmodel;
+ private String numberplate;
+ private double price;
+ private String color;
+ 
+}

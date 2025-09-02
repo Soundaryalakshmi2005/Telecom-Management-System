@@ -1,0 +1,17 @@
+package edu.jsp.XmlAnnotation;
+
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+public class PersonDriver {
+
+	public static void main(String[] args) {
+		ConfigurableApplicationContext cac=new ClassPathXmlApplicationContext("Config.xml");
+		Person p=(Person)cac.getBean("person");
+		System.out.println(p);
+		Person p1=(Person)cac.getBean("person");
+		System.out.println(p1);
+
+	}
+
+}

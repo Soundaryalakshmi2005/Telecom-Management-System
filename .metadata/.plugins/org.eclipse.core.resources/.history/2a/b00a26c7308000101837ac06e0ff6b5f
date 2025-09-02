@@ -1,0 +1,92 @@
+document.addEventListener("DOMContentLoaded", function () {
+  const productsTab = document.getElementById("productsTab");
+  const suppliersTab = document.getElementById("suppliersTab");
+  const transactionsTab = document.getElementById("transactionsTab");
+
+  const productsSection = document.getElementById("productsSection");
+  const suppliersSection = document.getElementById("suppliersSection");
+  const transactionsSection = document.getElementById("transactionsSection");
+
+  function showSection(sectionToShow) {
+    [productsSection, suppliersSection, transactionsSection].forEach(section => {
+      section.classList.add("hidden");
+    });
+    sectionToShow.classList.remove("hidden");
+  }
+
+  productsTab.addEventListener("click", () => {
+    showSection(productsSection);
+    loadProducts();
+  });
+  suppliersTab.addEventListener("click", () => {
+    showSection(suppliersSection);
+    loadSuppliers();
+  });
+  transactionsTab.addEventListener("click", () => {
+    showSection(transactionsSection);
+    loadTransactions();
+  });
+
+  // Load data functions
+  function loadProducts() {
+    fetch("http://localhost:8080/api/products")
+      .then(res => res.json())
+      .then(data => {
+        const tbody = document.querySelector("#productsTable tbody");
+        tbody.innerHTML = "";
+        data.forEach(p => {
+          const row = `<tr>
+            <td>${p.id}</td>
+            <td>${p.name}</td>
+            <td>${p.category}</td>
+            <td>${p.stock}</td>
+            <td>${p.reorderPoint}</td>
+          </tr>`;
+          tbody.innerHTML += row;
+        });
+      })
+      .catch(err => console.error("Error loading products:", err));
+  }
+
+  function loadSuppliers() {
+    fetch("http://localhost:8080/api/suppliers")
+      .then(res => res.json())
+      .then(data => {
+        const tbody = document.querySelector("#suppliersTable tbody");
+        tbody.innerHTML = "";
+        data.forEach(s => {
+          const row = `<tr>
+            <td>${s.id}</td>
+            <td>${s.name}</td>
+            <td>${s.contactNumber}</td>
+            <td>${s.email}</td>
+          </tr>`;
+          tbody.innerHTML += row;
+        });
+      })
+      .catch(err => console.error("Error loading suppliers:", err));
+  }
+
+  function loadTransactions() {
+    fetch("http://localhost:8080/api/transactions")
+      .then(res => res.json())
+      .then(data => {
+        const tbody = document.querySelector("#transactionsTable tbody");
+        tbody.innerHTML = "";
+        data.forEach(t => {
+          const row = `<tr>
+            <td>${t.id}</td>
+            <td>${t.product ? t.product.name : "N/A"}</td>
+            <td>${t.quantity}</td>
+            <td>${t.type}</td>
+            <td>${t.timestamp}</td>
+          </tr>`;
+          tbody.innerHTML += row;
+        });
+      })
+      .catch(err => console.error("Error loading transactions:", err));
+  }
+
+  // Load products by default
+  loadProducts();
+});

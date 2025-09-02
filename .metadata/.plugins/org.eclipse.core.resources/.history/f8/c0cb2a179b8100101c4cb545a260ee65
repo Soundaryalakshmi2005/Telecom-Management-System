@@ -1,0 +1,10 @@
+package edu.jsp.springcore;
+
+public class Subject {
+	public static void main(String[] args) {
+		
+		private int subjectid;
+		private String name;
+	}
+
+}

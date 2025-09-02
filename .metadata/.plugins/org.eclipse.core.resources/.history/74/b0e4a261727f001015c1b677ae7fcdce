@@ -1,0 +1,5 @@
+package com.tims.repository;
+
+public interface SupplierRepository {
+
+}

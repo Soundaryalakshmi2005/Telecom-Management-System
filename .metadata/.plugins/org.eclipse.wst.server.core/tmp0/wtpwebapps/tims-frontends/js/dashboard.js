@@ -1,0 +1,255 @@
+document.addEventListener("DOMContentLoaded", function () {
+  // Tabs
+  const productsTab = document.getElementById("productsTab");
+  const suppliersTab = document.getElementById("suppliersTab");
+  const transactionsTab = document.getElementById("transactionsTab");
+
+  const productsSection = document.getElementById("productsSection");
+  const suppliersSection = document.getElementById("suppliersSection");
+  const transactionsSection = document.getElementById("transactionsSection");
+
+  function showSection(sectionToShow) {
+    [productsSection, suppliersSection, transactionsSection].forEach(section => {
+      section.classList.add("hidden");
+    });
+    sectionToShow.classList.remove("hidden");
+  }
+
+  // Default load products
+  showSection(productsSection);
+  loadProducts();
+
+  productsTab.addEventListener("click", () => {
+    showSection(productsSection);
+    loadProducts();
+  });
+  suppliersTab.addEventListener("click", () => {
+    showSection(suppliersSection);
+    loadSuppliers();
+  });
+  transactionsTab.addEventListener("click", () => {
+    showSection(transactionsSection);
+    loadTransactions();
+  });
+
+  // Handle responses
+  function handleResponse(response) {
+    if (response.ok) {
+      return response.json().catch(() => ({}));
+    } else {
+      return response.text().then(msg => { throw new Error(msg); });
+    }
+  }
+
+  // ================== LOAD FUNCTIONS ==================
+
+  function loadProducts() {
+    fetch("http://localhost:8080/api/products")
+      .then(res => res.json())
+      .then(data => {
+        const tbody = document.querySelector("#productsTable tbody");
+        tbody.innerHTML = "";
+        data.forEach(p => {
+          const row = `<tr>
+            <td>${p.id}</td>
+            <td>${p.name}</td>
+            <td>${p.category}</td>
+            <td>${p.stock}</td>
+            <td>${p.reorderPoint}</td>
+            <td>
+              <button onclick="editProduct(${p.id}, '${p.name}', '${p.category}', ${p.stock}, ${p.reorderPoint})">✏️</button>
+              <button onclick="deleteProduct(${p.id})">🗑️</button>
+            </td>
+          </tr>`;
+          tbody.innerHTML += row;
+        });
+      })
+      .catch(err => console.error("Error loading products:", err));
+  }
+
+  function loadSuppliers() {
+    fetch("http://localhost:8080/api/suppliers")
+      .then(res => res.json())
+      .then(data => {
+        const tbody = document.querySelector("#suppliersTable tbody");
+        tbody.innerHTML = "";
+        data.forEach(s => {
+          const row = `<tr>
+            <td>${s.id}</td>
+            <td>${s.name}</td>
+            <td>${s.contactPhone || "N/A"}</td>
+            <td>${s.contactEmail || "N/A"}</td>
+            <td>
+              <button onclick="editSupplier(${s.id}, '${s.name}', '${s.contactPhone || ""}', '${s.contactEmail || ""}')">✏️</button>
+              <button onclick="deleteSupplier(${s.id})">🗑️</button>
+            </td>
+          </tr>`;
+          tbody.innerHTML += row;
+        });
+      })
+      .catch(err => console.error("Error loading suppliers:", err));
+  }
+
+  function loadTransactions() {
+    fetch("http://localhost:8080/api/transactions")
+      .then(res => res.json())
+      .then(data => {
+        const tbody = document.querySelector("#transactionsTable tbody");
+        tbody.innerHTML = "";
+        data.forEach(t => {
+          const row = `<tr>
+            <td>${t.id}</td>
+            <td>${t.product ? t.product.name : "N/A"}</td>
+            <td>${t.quantity}</td>
+            <td>${t.transactionType}</td>
+            <td>${t.createdAt || "N/A"}</td>
+          </tr>`;
+          tbody.innerHTML += row;
+        });
+      })
+      .catch(err => console.error("Error loading transactions:", err));
+  }
+
+  // ================== FORM HANDLERS ==================
+
+  // Add Product
+  document.getElementById("productForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const newProduct = {
+      name: document.getElementById("prodName").value,
+      category: document.getElementById("prodCategory").value,
+      stock: parseFloat(document.getElementById("prodStock").value),
+      reorderPoint: parseInt(document.getElementById("prodReorder").value)
+    };
+
+    fetch("http://localhost:8080/api/products", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(newProduct)
+    })
+      .then(handleResponse)
+      .then(() => {
+        loadProducts();
+        e.target.reset();
+      })
+      .catch(err => alert("❌ Failed: " + err.message));
+  });
+
+  // Add Supplier
+  document.getElementById("supplierForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const newSupplier = {
+      name: document.getElementById("supName").value,
+      contactPhone: document.getElementById("supContact").value,
+      contactEmail: document.getElementById("supEmail").value
+    };
+
+    fetch("http://localhost:8080/api/suppliers", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(newSupplier)
+    })
+      .then(handleResponse)
+      .then(() => {
+        loadSuppliers();
+        e.target.reset();
+      })
+      .catch(err => alert("❌ Failed: " + err.message));
+  });
+
+  // Add Transaction
+  document.getElementById("transactionForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const newTransaction = {
+      product: { id: parseInt(document.getElementById("txnProductId").value) },
+      quantity: parseInt(document.getElementById("txnQuantity").value),
+	  type: document.getElementById("txnType").value
+    };
+
+    fetch("http://localhost:8080/api/transactions", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(newTransaction)
+    })
+      .then(handleResponse)
+      .then(() => {
+        loadTransactions();
+        e.target.reset();
+      })
+      .catch(err => alert("❌ Failed: " + err.message));
+  });
+
+  // ================== UPDATE + DELETE FUNCTIONS ==================
+
+  // Product
+  window.editProduct = function (id, name, category, stock, reorderPoint) {
+    document.getElementById("prodName").value = name;
+    document.getElementById("prodCategory").value = category;
+    document.getElementById("prodStock").value = stock;
+    document.getElementById("prodReorder").value = reorderPoint;
+
+    const form = document.getElementById("productForm");
+    form.onsubmit = function (e) {
+      e.preventDefault();
+      const updated = {
+        name: document.getElementById("prodName").value,
+        category: document.getElementById("prodCategory").value,
+        stock: parseFloat(document.getElementById("prodStock").value),
+        reorderPoint: parseInt(document.getElementById("prodReorder").value)
+      };
+      fetch(`http://localhost:8080/api/products/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(updated)
+      })
+        .then(handleResponse)
+        .then(() => loadProducts())
+        .then(() => form.reset());
+    };
+  };
+
+  window.deleteProduct = function (id) {
+    if (confirm("Delete this product?")) {
+      fetch(`http://localhost:8080/api/products/${id}`, { method: "DELETE" })
+        .then(handleResponse)
+        .then(() => loadProducts());
+    }
+  };
+
+  // Supplier
+  window.editSupplier = function (id, name, contactPhone, contactEmail) {
+    document.getElementById("supName").value = name;
+    document.getElementById("supContact").value = contactPhone;
+    document.getElementById("supEmail").value = contactEmail;
+
+    const form = document.getElementById("supplierForm");
+    form.onsubmit = function (e) {
+      e.preventDefault();
+      const updated = {
+        name: document.getElementById("supName").value,
+        contactPhone: document.getElementById("supContact").value,
+        contactEmail: document.getElementById("supEmail").value
+      };
+      fetch(`http://localhost:8080/api/suppliers/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(updated)
+      })
+        .then(handleResponse)
+        .then(() => loadSuppliers())
+        .then(() => form.reset());
+    };
+  };
+
+  window.deleteSupplier = function (id) {
+    if (confirm("Delete this supplier?")) {
+      fetch(`http://localhost:8080/api/suppliers/${id}`, { method: "DELETE" })
+        .then(handleResponse)
+        .then(() => loadSuppliers());
+    }
+  };
+
+});

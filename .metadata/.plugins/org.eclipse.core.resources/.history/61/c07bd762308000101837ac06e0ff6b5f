@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>TIMS Dashboard</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <h2>TIMS Dashboard</h2>
+    <ul>
+      <li><a href="#" id="productsTab">Products</a></li>
+      <li><a href="#" id="suppliersTab">Suppliers</a></li>
+      <li><a href="#" id="transactionsTab">Transactions</a></li>
+    </ul>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="content">
+    <section id="productsSection" class="section">📦 Products will show here</section>
+    <section id="suppliersSection" class="section hidden">🏭 Suppliers will show here</section>
+    <section id="transactionsSection" class="section hidden">🔄 Transactions will show here</section>
+  </div>
+
+  <script src="js/dashboard.js"></script>
+</body>
+</html>

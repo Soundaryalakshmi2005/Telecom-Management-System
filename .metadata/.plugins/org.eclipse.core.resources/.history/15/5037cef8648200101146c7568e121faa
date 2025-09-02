@@ -1,0 +1,20 @@
+package edu.jsp.XmlAnnotation;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+@Component
+public class Address {
+	
+	@Value("144")
+	private int hno;
+	@Value("line no 2")
+	private String lineno;
+	@Value("Anna nagar")
+	private String streetname;
+	@Value("Namakkal")
+	private String district;
+	@Value("TamilNadu")
+	private long pincode;
+
+}

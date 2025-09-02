@@ -1,0 +1,21 @@
+package edu.jsp.XmlAnnotation;
+
+import org.springframework.stereotype.Component;
+
+import lombok.Data;
+
+@Data
+@Component
+public class Person {
+	
+	@Override
+	public String toString() {
+		return "Person [id=" + id + ", name=" + name + ", age=" + age + ", gender=" + gender + "]";
+	}
+	private int id;
+	private String name;
+	private int age;
+	private String gender;
+	
+
+}

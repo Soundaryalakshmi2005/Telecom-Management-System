@@ -1,0 +1,13 @@
+package edu.jsp.ReadPropertyFile;
+
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+public class CarDriver {
+
+	public static void main(String[] args) {
+	     ConfigurableApplicationContext cac=new ClassPathXmlApplicationContext("Config.xml");
+
+	}
+
+}

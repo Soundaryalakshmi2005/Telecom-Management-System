@@ -1,0 +1,23 @@
+package com.tims.controller;
+
+import org.springframework.web.bind.annotation.*;
+import java.util.List;
+
+import com.tims.model.Product;
+import com.tims.repository.ProductRepository;
+
+@RestController
+@RequestMapping("/api/products")
+public class ProductController {
+
+    private final ProductRepository productRepository;
+
+    public ProductController(ProductRepository productRepository) {
+        this.productRepository = productRepository;
+    }
+
+    @GetMapping
+    public List<Product> getAllProducts() {
+        return productRepository.findAll();
+    }
+}

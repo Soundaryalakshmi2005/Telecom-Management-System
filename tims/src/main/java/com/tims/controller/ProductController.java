@@ -1,0 +1,53 @@
+package com.tims.controller;
+
+import org.springframework.web.bind.annotation.*;
+import java.util.List;
+import com.tims.model.Product;
+import com.tims.repository.ProductRepository;
+
+@RestController
+@RequestMapping("/api/products")
+public class ProductController {
+
+    private final ProductRepository productRepository;
+
+    public ProductController(ProductRepository productRepository) {
+        this.productRepository = productRepository;
+    }
+
+    // Get all products
+    @GetMapping
+    public List<Product> getAllProducts() {
+        return productRepository.findAll();
+    }
+
+    // Create a new product
+    @PostMapping
+    public Product createProduct(@RequestBody Product product) {
+        return productRepository.save(product);
+    }
+
+    // Get product by ID
+    @GetMapping("/{id}")
+    public Product getProductById(@PathVariable Long id) {
+        return productRepository.findById(id).orElse(null);
+    }
+
+    // Update product
+    @PutMapping("/{id}")
+    public Product updateProduct(@PathVariable Long id, @RequestBody Product productDetails) {
+        return productRepository.findById(id).map(product -> {
+            product.setName(productDetails.getName());
+            product.setCategory(productDetails.getCategory());
+            product.setStock(productDetails.getStock());
+            product.setReorderPoint(productDetails.getReorderPoint());
+            return productRepository.save(product);
+        }).orElse(null);
+    }
+
+    // Delete product
+    @DeleteMapping("/{id}")
+    public void deleteProduct(@PathVariable Long id) {
+        productRepository.deleteById(id);
+    }
+}

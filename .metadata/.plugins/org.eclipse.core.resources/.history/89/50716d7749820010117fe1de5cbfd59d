@@ -1,0 +1,65 @@
+package edu.jsp.ReadPropertyFile;
+
+
+public class Car {
+	
+ @Override
+	public String toString() {
+		return "Car [cid=" + cid + ", carname=" + carname + ", carmodel=" + carmodel + ", numberplate=" + numberplate
+				+ ", price=" + price + ", color=" + color + "]";
+	}
+ public int getCid() {
+		return cid;
+	}
+	public void setCid(int cid) {
+		this.cid = cid;
+	}
+	public String getCarname() {
+		return carname;
+	}
+	public void setCarname(String carname) {
+		this.carname = carname;
+	}
+	public String getCarmodel() {
+		return carmodel;
+	}
+	public void setCarmodel(String carmodel) {
+		this.carmodel = carmodel;
+	}
+	public String getNumberplate() {
+		return numberplate;
+	}
+	public void setNumberplate(String numberplate) {
+		this.numberplate = numberplate;
+	}
+	public double getPrice() {
+		return price;
+	}
+	public void setPrice(double price) {
+		this.price = price;
+	}
+	public String getColor() {
+		return color;
+	}
+	public void setColor(String color) {
+		this.color = color;
+	}
+ private int cid;
+ private String carname;
+ private String  carmodel;
+ private String numberplate;
+ private double price;
+ private String color;
+ 
+ Car(){
+	 System.out.println("aiii");
+ }
+ 
+ void starting() {
+	 System.out.println(" eathan method starting");
+ }
+ 
+ void ending() {
+	 System.out.println(" eathan method ending");
+ }
+}

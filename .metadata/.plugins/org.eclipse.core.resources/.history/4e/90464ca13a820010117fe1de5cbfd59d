@@ -1,0 +1,106 @@
+package edu.jsp.springcore;
+
+import java.util.List;
+import java.util.Map;
+
+import lombok.AllArgsConstructor;
+
+@AllArgsConstructor
+
+public class Student {
+	
+	private int rollno;
+	private String name;
+	private String email;
+	private double per;
+	private Subject subject;
+	private List<String> frndFriends;
+	private Map<String,String> map;
+	
+	
+	
+	public int getRollno() {
+		return rollno;
+	}
+
+
+
+	public void setRollno(int rollno) {
+		this.rollno = rollno;
+	}
+
+
+
+	public String getName() {
+		return name;
+	}
+
+
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+
+
+	public String getEmail() {
+		return email;
+	}
+
+
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+
+
+	public double getPer() {
+		return per;
+	}
+
+
+
+	public void setPer(double per) {
+		this.per = per;
+	}
+
+
+
+	public Subject getSubject() {
+		return subject;
+	}
+
+
+
+	public void setSubject(Subject subject) {
+		this.subject = subject;
+	}
+
+
+
+	public List<String> getFrndFriends() {
+		return frndFriends;
+	}
+
+	public void setFrndFriends(List<String> frndFriends) {
+		this.frndFriends = frndFriends;
+	}
+
+
+
+	public Map<String, String> getMap() {
+		return map;
+	}
+
+	public void setMap(Map<String, String> map) {
+		this.map = map;
+	}
+
+	@Override
+	public String toString() {
+		return "Student [rollno=" + rollno + ", name=" + name + ", email=" + email + ", per=" + per + ", subject="
+				+ subject + ", frndFriends=" + frndFriends + ", map=" + map + "]";
+	}
+
+}

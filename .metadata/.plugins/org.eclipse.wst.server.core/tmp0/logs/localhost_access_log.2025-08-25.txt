@@ -1,0 +1,7 @@
+127.0.0.1 - - [25/Aug/2025:10:05:32 +0530] "GET / HTTP/1.1" 404 752
+0:0:0:0:0:0:0:1 - - [25/Aug/2025:10:05:33 +0530] "GET /tims-frontends/index.html HTTP/1.1" 304 -
+0:0:0:0:0:0:0:1 - - [25/Aug/2025:10:05:33 +0530] "GET /tims-frontends/js/script.js HTTP/1.1" 304 -
+0:0:0:0:0:0:0:1 - - [25/Aug/2025:10:05:33 +0530] "GET /tims-frontends/css/style.css HTTP/1.1" 304 -
+0:0:0:0:0:0:0:1 - - [25/Aug/2025:10:05:33 +0530] "GET /favicon.ico HTTP/1.1" 404 763
+0:0:0:0:0:0:0:1 - - [25/Aug/2025:10:05:54 +0530] "GET /tims-frontends/dashboard.html HTTP/1.1" 304 -
+0:0:0:0:0:0:0:1 - - [25/Aug/2025:10:05:55 +0530] "GET /tims-frontends/js/dashboard.js HTTP/1.1" 200 8748

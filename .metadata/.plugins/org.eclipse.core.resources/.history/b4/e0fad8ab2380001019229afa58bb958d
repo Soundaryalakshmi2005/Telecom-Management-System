@@ -1,0 +1,5 @@
+package com.tims.config;
+
+public class CorsConfig {
+
+}

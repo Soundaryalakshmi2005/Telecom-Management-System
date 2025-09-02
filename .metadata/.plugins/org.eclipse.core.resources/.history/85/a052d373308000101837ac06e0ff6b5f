@@ -1,0 +1,20 @@
+document.addEventListener("DOMContentLoaded", function () {
+  const productsTab = document.getElementById("productsTab");
+  const suppliersTab = document.getElementById("suppliersTab");
+  const transactionsTab = document.getElementById("transactionsTab");
+
+  const productsSection = document.getElementById("productsSection");
+  const suppliersSection = document.getElementById("suppliersSection");
+  const transactionsSection = document.getElementById("transactionsSection");
+
+  function showSection(sectionToShow) {
+    [productsSection, suppliersSection, transactionsSection].forEach(section => {
+      section.classList.add("hidden");
+    });
+    sectionToShow.classList.remove("hidden");
+  }
+
+  productsTab.addEventListener("click", () => showSection(productsSection));
+  suppliersTab.addEventListener("click", () => showSection(suppliersSection));
+  transactionsTab.addEventListener("click", () => showSection(transactionsSection));
+});

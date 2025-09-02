@@ -1,0 +1,32 @@
+package com.example.demo.controller;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController     //The frontend class is coming here while the any actions made in frontend
+public class DemoController {   //In servlet we can able to create only one method but here we can able to create mutiple methods
+	
+	@GetMapping("/hii")  //mapping present in postman
+	String getData() {
+		return "Good morning mapla";
+	}
+	@GetMapping("/add")
+		int add(int a,int b) {
+		return a+b;
+	}
+	@GetMapping("/student")
+	    String getStudent(@RequestParam int id) {
+		return "i got id" + id;
+	}
+	@GetMapping("/info/{name}")
+	String getinfo(@PathVariable String name) {
+		return "name is: " +name;
+	}
+	@GetMapping("/students")
+	String getAllIfo(@RequestBody Student s) {
+		return s.toString();
+	}
+}

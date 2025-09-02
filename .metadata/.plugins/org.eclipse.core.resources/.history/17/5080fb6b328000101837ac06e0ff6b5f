@@ -1,0 +1,30 @@
+document.getElementById("productForm").addEventListener("submit", function (e) {
+  e.preventDefault();
+
+  const newProduct = {
+    name: document.getElementById("prodName").value,
+    category: document.getElementById("prodCategory").value,
+    price: parseFloat(document.getElementById("prodPrice").value),
+    stock: parseInt(document.getElementById("prodStock").value)
+  };
+
+  fetch("http://localhost:8080/api/products", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(newProduct)
+  })
+    .then(response => {
+      if (!response.ok) {
+        return response.text().then(msg => { throw new Error(msg); });
+      }
+      return response.json();
+    })
+    .then(() => {
+      loadProducts();   // refresh table
+      e.target.reset(); // clear form
+    })
+    .catch(err => {
+      console.error("Error adding product:", err);
+      alert("❌ Failed: " + err.message);
+    });
+});

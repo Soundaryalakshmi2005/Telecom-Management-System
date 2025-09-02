@@ -1,0 +1,29 @@
+package com.tims.controller;
+
+import org.springframework.web.bind.annotation.*;
+import java.util.List;
+
+import com.tims.model.Transaction;
+import com.tims.repository.TransactionRepository;
+
+@RestController
+@RequestMapping("/api/transactions")
+@CrossOrigin(origins = "http://localhost:8081")  // allow frontend
+public class TransactionController {
+
+    private final TransactionRepository transactionRepository;
+
+    public TransactionController(TransactionRepository transactionRepository) {
+        this.transactionRepository = transactionRepository;
+    }
+
+    @GetMapping
+    public List<Transaction> getAllTransactions() {
+        return transactionRepository.findAll();
+    }
+
+    @PostMapping
+    public Transaction addTransaction(@RequestBody Transaction transaction) {
+        return transactionRepository.save(transaction);
+    }
+}

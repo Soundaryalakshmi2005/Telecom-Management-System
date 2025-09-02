@@ -1,0 +1,53 @@
+package com.tims.controller;
+
+import org.springframework.web.bind.annotation.*;
+import java.util.List;
+import com.tims.model.Supplier;
+import com.tims.repository.SupplierRepository;
+
+@RestController
+@RequestMapping("/api/suppliers")
+public class SupplierController {
+
+    private final SupplierRepository supplierRepository;
+
+    public SupplierController(SupplierRepository supplierRepository) {
+        this.supplierRepository = supplierRepository;
+    }
+
+    // ✅ Get all suppliers
+    @GetMapping
+    public List<Supplier> getAllSuppliers() {
+        return supplierRepository.findAll();
+    }
+
+    // ✅ Add new supplier
+    @PostMapping
+    public Supplier createSupplier(@RequestBody Supplier supplier) {
+        return supplierRepository.save(supplier);
+    }
+
+    // ✅ Get supplier by ID
+    @GetMapping("/{id}")
+    public Supplier getSupplierById(@PathVariable Long id) {
+        return supplierRepository.findById(id).orElse(null);
+    }
+
+    // ✅ Update supplier
+    @PutMapping("/{id}")
+    public Supplier updateSupplier(@PathVariable Long id, @RequestBody Supplier supplierDetails) {
+        return supplierRepository.findById(id).map(supplier -> {
+            supplier.setName(supplierDetails.getName());
+            supplier.setContact(supplierDetails.getContact());
+            supplier.setContactEmail(supplierDetails.getContactEmail());
+            supplier.setContactPhone(supplierDetails.getContactPhone());
+            return supplierRepository.save(supplier);
+        }).orElse(null);
+    }
+
+    // ✅ Delete supplier
+    @DeleteMapping("/{id}")
+    public void deleteSupplier(@PathVariable Long id) {
+        supplierRepository.deleteById(id);
+    }
+}
